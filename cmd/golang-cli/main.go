@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/arielril/golang-cli/internal/cmd"
+	"github.com/arielril/golang-cli/internal/user-interface/cli"
 )
 
 func main() {
-	cmd.Execute()
+	cli.Execute()
 }
