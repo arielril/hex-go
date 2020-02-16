@@ -5,7 +5,7 @@ GOBUILD=$(GOCMD) build
 GOMOD=$(GOCMD) mod
 GOBUILDVAR=CGO_ENABLED=0 GOOS=linux GOARCH=amd64
 BINARY?=cli
-BINARY_PATH=$(SOURCEDIR)/cmd/golang-cli/main.go
+BINARY_PATH=$(SOURCEDIR)/cmd/hexgo/main.go
 
 .DEFAULT_GOAL: $(BINARY)
 
