@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/arielril/hexgo/internal/handler"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -14,6 +16,7 @@ var (
 		Use:   "cli",
 		Short: "Golang CLI Template project",
 	}
+	ctx *handler.HandlerContext
 )
 
 // Executes the command line interface
@@ -28,6 +31,10 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Config file (default is ./configs/.config.yaml)")
+}
+
+func initContext() {
+	ctx = handler.NewContext()
 }
 
 func initConfig() {
@@ -46,4 +53,6 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Println("Failed to load config file:", viper.ConfigFileUsed())
 	}
+
+	initContext()
 }

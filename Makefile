@@ -22,5 +22,8 @@ linux: clean build-linux
 download:
 	$(GOMOD) download
 
+serve-http:
+	./${BINARY} serve
+
 clean: 
 	rm -f $(BINARY)

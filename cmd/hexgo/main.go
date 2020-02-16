@@ -1,7 +1,7 @@
 package main
 
 import (
-	"hexgo/internal/cli"
+	"github.com/arielril/hexgo/internal/cli"
 )
 
 func main() {
