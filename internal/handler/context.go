@@ -1,26 +1,33 @@
 package handler
 
 import (
+	"fmt"
+
 	"github.com/arielril/hexgo/internal/container"
-	uController "github.com/arielril/hexgo/internal/controller/user"
+	user "github.com/arielril/hexgo/internal/controller/user"
 )
 
 type HandlerContext struct {
-	UserController uController.UserController
+	UserController user.UserController
 }
 
 func createContainer() *container.Container {
-	containerConf := &container.ContainerConfig{
-		Database: new(interface{}),
+	containerConf := &container.ContainerConfig{}
+
+	cont, err := container.NewContainer(containerConf)
+
+	if err != nil {
+		fmt.Println("failed container", err)
+		panic("failed to create container")
 	}
 
-	return container.NewContainer(containerConf)
+	return cont
 }
 
 func NewContext() *HandlerContext {
 	container := createContainer()
 
-	userCtrl := uController.NewUserController(container)
+	userCtrl := user.NewUserController(container)
 
 	return &HandlerContext{
 		UserController: userCtrl,
