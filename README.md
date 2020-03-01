@@ -4,6 +4,21 @@
 
 This is a template repository to create CLI using golang. It creates a powerful cli using Cobra and Viper as main packages.
 
+## Roadmap
+- [ ] Create a command list based in the product wanted
+- [ ] Search which events the service will emit. How: take an use case path and pinpoint the emitted events
+- [ ] Implement the use cases (commands) found in the past steps
+- [ ] Add the defined events to the project
+- [ ] Add better logging method
+
+## List of Commands
+- createUser: create an user in the system
+- createUserAndSendEmail: create an user in the system and send an email informing the sucessful creation
+- updateUserData: update the user using the informed data
+- getUserDataById: search an user with the userID
+- getUserByEmail: search an user with the email. This command will return a list of matched users
+
+
 ## Setup
 
 Create your own `.config.yaml` file to configure the CLI.
