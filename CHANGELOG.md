@@ -12,3 +12,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Makefile to build the project with the right values
+- README adding the roadmap section to tell what are the next steps
+- README adding a section with a list of commands to implement in the system using something like CQRS

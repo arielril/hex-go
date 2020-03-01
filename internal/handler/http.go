@@ -39,7 +39,7 @@ func (h *httpHandler) Serve() error {
 				return
 			}
 
-			err = h.UserController.Create(&user)
+			err = h.UserController.CreateUser(&user)
 			if err != nil {
 				w.WriteHeader(http.StatusInternalServerError)
 				fmt.Fprintf(w, "Failed to insert user")

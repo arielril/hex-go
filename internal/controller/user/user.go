@@ -6,9 +6,10 @@ import (
 )
 
 type UserController interface {
-	Create(user *user.User) error
-	Get() ([]*user.User, error)
-	GetById(id string) (*user.User, error)
+	CreateUser(user *user.User) error
+	CreateUserAndSendEmail(user *user.User) error
+	GetUserByEmail(email string) ([]*user.User, error)
+	GetUserById(id string) (*user.User, error)
 }
 
 type userController struct {
@@ -19,14 +20,18 @@ func NewUserController(c *container.Container) UserController {
 	return &userController{c}
 }
 
-func (ctrl *userController) Create(user *user.User) error {
+func (ctrl *userController) CreateUser(user *user.User) error {
 	return ctrl.c.UserService.CreateUser(user)
 }
 
-func (ctrl *userController) Get() ([]*user.User, error) {
+func (ctrl *userController) CreateUserAndSendEmail(user *user.User) error {
+	return nil
+}
+
+func (ctrl *userController) GetUserByEmail(email string) ([]*user.User, error) {
 	return ctrl.c.UserService.FindAllUsers()
 }
 
-func (ctrl *userController) GetById(id string) (*user.User, error) {
+func (ctrl *userController) GetUserById(id string) (*user.User, error) {
 	return ctrl.c.UserService.FindUserById(id)
 }
