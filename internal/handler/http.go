@@ -2,11 +2,11 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/arielril/hexgo/internal/container/user"
 	uController "github.com/arielril/hexgo/internal/controller/user"
+	"github.com/gin-gonic/gin"
 )
 
 type HttpHandler interface {
@@ -24,34 +24,54 @@ func NewHttpServer(ctx *HandlerContext) HttpHandler {
 }
 
 func (h *httpHandler) Serve() error {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "I am alive!! :P")
+	engine := gin.New()
+
+	engine.Use(gin.Recovery())
+
+	api := engine.Group("/")
+
+	api.GET("/simpleHealthCheck", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"alive": true,
+		})
 	})
 
-	http.HandleFunc("/user", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == "POST" {
-			var user user.User
+	api.POST("/v1/user", func(c *gin.Context) {
+		var user *user.User
 
-			err := json.NewDecoder(r.Body).Decode(&user)
-			if err != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				fmt.Fprintf(w, "Failed to parse body. ERROR: %v", err)
-				return
-			}
+		rawData, err := c.GetRawData()
 
-			err = h.UserController.CreateUser(&user)
-			if err != nil {
-				w.WriteHeader(http.StatusInternalServerError)
-				fmt.Fprintf(w, "Failed to insert user")
-				return
-			}
-
-			resp, _ := json.Marshal(&user)
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			_, _ = w.Write(resp)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "failed to parse data",
+				"err":     err,
+			})
+			return
 		}
+
+		_ = json.Unmarshal(rawData, user)
+		if user == nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "failed to create entity from the request",
+				"err":     err,
+			})
+			return
+		}
+
+		err = h.UserController.CreateUser(user)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"message": "failed to insert user",
+				"err":     err,
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"user_id": user.ID,
+			"created": true,
+		})
 	})
 
-	return http.ListenAndServe(":3000", nil)
+	return engine.Run(":3000")
 }
