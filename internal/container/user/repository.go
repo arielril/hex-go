@@ -1,16 +1,8 @@
 package user
 
 import (
-	"time"
+	. "github.com/arielril/hexgo/internal/container/model"
 )
-
-type User struct {
-	ID           string
-	FullName     string
-	EmailAddress string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-}
 
 type UserRepository interface {
 	CreateUser(user *User) error

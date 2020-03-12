@@ -3,6 +3,8 @@ package user
 import (
 	"time"
 
+	. "github.com/arielril/hexgo/internal/container/model"
+
 	"github.com/google/uuid"
 )
 

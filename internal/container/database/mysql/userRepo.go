@@ -1,6 +1,7 @@
 package mysql
 
 import (
+	"github.com/arielril/hexgo/internal/container/model"
 	"github.com/arielril/hexgo/internal/container/user"
 )
 
@@ -17,23 +18,23 @@ func NewUserRepo() (user.UserRepository, error) {
 		return nil, err
 	}
 
-	db.AutoMigrate(&user.User{})
+	db.AutoMigrate(&model.User{})
 
 	return &userRepository{db}, nil
 }
 
-func (r *userRepository) CreateUser(user *user.User) error {
+func (r *userRepository) CreateUser(user *model.User) error {
 	r.Table(table).Create(user)
 	return nil
 }
 
-func (r *userRepository) FindUser(params map[string]interface{}) ([]*user.User, error) {
-	results := r.Table(table).Find(make([]*user.User, 0), params).Value
+func (r *userRepository) FindUser(params map[string]interface{}) ([]*model.User, error) {
+	results := r.Table(table).Find(make([]*model.User, 0), params).Value
 
-	return results.([]*user.User), nil
+	return results.([]*model.User), nil
 }
 
-func (r *userRepository) FindAllUsers() ([]*user.User, error) {
-	results := r.Table(table).Find(make([]*user.User, 0)).Value
-	return results.([]*user.User), nil
+func (r *userRepository) FindAllUsers() ([]*model.User, error) {
+	results := r.Table(table).Find(make([]*model.User, 0)).Value
+	return results.([]*model.User), nil
 }

@@ -4,7 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/arielril/hexgo/internal/container/user"
+	"github.com/arielril/hexgo/internal/container/model"
+
 	uController "github.com/arielril/hexgo/internal/controller/user"
 	"github.com/gin-gonic/gin"
 )
@@ -37,7 +38,7 @@ func (h *httpHandler) Serve() error {
 	})
 
 	api.POST("/v1/user", func(c *gin.Context) {
-		var user *user.User
+		var user *model.User
 
 		rawData, err := c.GetRawData()
 
