@@ -25,7 +25,7 @@ func NewHttpServer(ctx *HandlerContext) HttpHandler {
 }
 
 func (h *httpHandler) Serve() error {
-	engine := gin.New()
+	engine := gin.Default()
 
 	engine.Use(gin.Recovery())
 
