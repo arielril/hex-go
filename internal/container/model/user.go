@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// User struct
 type User struct {
 	ID           string
 	FullName     string

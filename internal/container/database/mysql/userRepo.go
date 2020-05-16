@@ -11,6 +11,7 @@ type userRepository struct {
 	*Persistence
 }
 
+// NewUserRepo create a new repository for the user
 func NewUserRepo() (user.UserRepository, error) {
 	db, err := NewConnection()
 

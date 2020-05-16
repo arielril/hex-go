@@ -4,13 +4,16 @@ import (
 	"sync"
 
 	"github.com/jinzhu/gorm"
+	// Get the mysql dialect to connect
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
+// Persistence hold the persistence
 type Persistence struct {
 	*gorm.DB
 }
 
+// Model of the database
 type Model = gorm.Model
 
 var db *gorm.DB
@@ -30,6 +33,7 @@ func initDatabase() (*gorm.DB, error) {
 	return db, err
 }
 
+// NewConnection create a new connection to the database
 func NewConnection() (*Persistence, error) {
 	database, err := initDatabase()
 
